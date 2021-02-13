@@ -1,6 +1,7 @@
 import React from 'react';
 import Text from "./text";
 import { InputGroup, FormControl, Card } from "react-bootstrap";
+import SimulatorInfo from "./simulatorInfo";
 
 const Simulator = ({text}) => {
     const textArr = text.split('');
@@ -11,7 +12,7 @@ const Simulator = ({text}) => {
     }
 
     return (
-        <div >
+        <div>
             <InputGroup className="mb-3">
                 <FormControl
                     as={'textarea'}
@@ -20,8 +21,11 @@ const Simulator = ({text}) => {
                     placeholder={'Начните вводить текст здесь'}
                 />
             </InputGroup>
-            <Card>
+            <Card style={{marginBottom: '15px'}}>
                 <Text text={textArr} inputUser={inputUser}/>
+            </Card>
+            <Card>
+                <SimulatorInfo/>
             </Card>
         </div>
     );
