@@ -38,7 +38,8 @@ const SimulatorPage = () => {
                         <Row className="justify-content-md-center">
                             <Simulator text={text}/>
                         </Row>
-                        <Row className="justify-content-md-center">
+                        <Row className="justify-content-md-center align-items-center">
+                            Хотите попробовать еще?
                             <Button
                                 variant="link"
                                 onClick={() => getText()}

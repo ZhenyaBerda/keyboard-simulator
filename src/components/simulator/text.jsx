@@ -3,7 +3,7 @@ import React from 'react';
 const Text = ({text, inputUser}) => {
     return (
         <div style={{margin: '15px'}}>
-            {text.map((symbol, index) => {
+            {text.split('').map((symbol, index) => {
                 let color;
                 if (index < inputUser.length) {
                     color = symbol === inputUser[index] ? '#99ff99' : '#ff6161';
