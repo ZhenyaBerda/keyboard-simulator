@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Jumbotron } from "react-bootstrap";
 
 
-const SimulatorInfo = ({accuracy}) => {
+const SimulatorInfo = ({spm, accuracy}) => {
 
     return (
         <div style={{ margin: '15px', textAlign: 'center' }}>
@@ -10,13 +10,13 @@ const SimulatorInfo = ({accuracy}) => {
                 <Col>
                     <Jumbotron style={{ padding: '10px 0', margin: 0}}>
                         <h6>Скорость</h6>
-                        <p>{} зн/мин</p>
+                        <p>{Math.trunc(spm)} зн/мин</p>
                     </Jumbotron>
                 </Col>
                 <Col>
                     <Jumbotron style={{ padding: '10px 0', margin: 0}}>
                         <h6>Точность</h6>
-                        <p>{accuracy}%</p>
+                        <p>{accuracy.toFixed(1)}%</p>
                     </Jumbotron>
                 </Col>
             </Row>

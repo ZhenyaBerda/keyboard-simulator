@@ -4,10 +4,34 @@ import { InputGroup, FormControl, Card } from "react-bootstrap";
 import SimulatorInfo from "./simulatorInfo";
 
 const Simulator = ({text}) => {
-    text = 'dddddddddddd'
     const [inputUser, setInputUser] = React.useState('');
     const [totalSymbols, setTotalSymbols] = React.useState(0);
     const [errors, setErrors] = React. useState(0);
+    const [seconds, setSeconds] = React.useState(0);
+    const [isActiveTimer, setIsActiveTimer] = React.useState(false);
+    const [isActiveInput, setIsActiveInput] = React.useState(false)
+
+    React.useEffect(() => {
+        if (totalSymbols === 1)
+            setIsActiveTimer(true);
+
+        if (inputUser === text) {
+            setIsActiveTimer(false);
+            setIsActiveInput(true)
+        }
+    }, [isActiveTimer, inputUser, totalSymbols, isActiveInput])
+
+    React.useEffect(() => {
+        let interval = null;
+        if (isActiveTimer) {
+            interval = setInterval(() => {
+                setSeconds(seconds => seconds + 1);
+            }, 1000);
+        } else if (!isActiveTimer && seconds !== 0) {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [isActiveTimer, seconds])
 
 
     const handleInput = (event) => {
@@ -21,14 +45,8 @@ const Simulator = ({text}) => {
             input = value;
             setInputUser(input);
         } else {
-            if (value.length === 2) {
-                input = value.substring(1, 2);
-                setInputUser(input)
-
-            } else {
-                input = value.substring(0, value.length - 2) + value.substring(value.length - 1);
-                setInputUser(input);
-            }
+            input = value.length === 2 ? value.substring(1, 2) : value.substring(0, value.length - 2) + value.substring(value.length - 1);
+            setInputUser(input);
         }
         checkErrors(input, text.substring(0, input.length))
     }
@@ -50,6 +68,7 @@ const Simulator = ({text}) => {
                         value={inputUser}
                         onChange={handleInput}
                         placeholder={'Начните вводить текст здесь'}
+                        readOnly={isActiveInput}
                     />
                 </InputGroup>
                 <Card style={{marginBottom: '15px'}}>
@@ -57,6 +76,7 @@ const Simulator = ({text}) => {
                 </Card>
                 <Card>
                     <SimulatorInfo
+                        spm={seconds ? totalSymbols / (seconds * 0.0166) : 0}
                         accuracy={totalSymbols ? (totalSymbols - errors) * 100 / totalSymbols : 0}
                        />
                 </Card>
