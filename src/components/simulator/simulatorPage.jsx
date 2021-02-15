@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Card, Button} from "react-bootstrap";
+import {Card, Button} from "react-bootstrap";
 import Simulator from "./simulator";
 
 const SimulatorPage = () => {
@@ -35,18 +35,7 @@ const SimulatorPage = () => {
                 :
                 <Card style={{width: '70vw', margin: '15px auto'}}>
                     <Card.Body>
-                        <Row className="justify-content-md-center">
-                            <Simulator text={text}/>
-                        </Row>
-                        <Row className="justify-content-md-center align-items-center">
-                            Хотите попробовать еще?
-                            <Button
-                                variant="link"
-                                onClick={() => getText()}
-                            >
-                                Новый текст
-                            </Button>
-                        </Row>
+                        <Simulator text={text} getText={getText}/>
                     </Card.Body>
                 </Card>
             }
