@@ -2,9 +2,11 @@ import React from 'react';
 import {Card, Button} from "react-bootstrap";
 import Simulator from "./components/simulator";
 
+//Страница тренажера
 const SimulatorPage = () => {
     const [text, setText] = React.useState('');
 
+    //Получение текста
     const getText = async () => {
         const url = `https://baconipsum.com/api/?type=meat-and-filler&paras=1`;
         await fetch(url)

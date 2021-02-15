@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card} from "react-bootstrap";
 
+//Страниция "Информация"
 const InfoPage = () => {
     return (
         <Card style={{width: '70vw', margin: '15px auto'}}>

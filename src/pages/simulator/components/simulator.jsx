@@ -3,6 +3,7 @@ import Text from "./text";
 import SimulatorInfo from "./simulatorInfo";
 import {InputGroup, FormControl, Card, Button, Row} from "react-bootstrap";
 
+//Копонент с тренажером
 const Simulator = ({text, getText}) => {
 
     const initialState = {
@@ -13,15 +14,18 @@ const Simulator = ({text, getText}) => {
         totalSymbols: 0,
     }
 
+    //Состояния компонента
     const [state, setState] = React.useState({...initialState})
     const [seconds, setSeconds] = React.useState(0);
 
+    //Функция для сброса компонента в начальное положение и получение нового текста
     const onReload = () => {
         getText();
         setState({...initialState});
         setSeconds(0);
     }
 
+    //Отслеживание начала и конца тренировки
     React.useEffect(() => {
         if (state.totalSymbols === 1)
             setState({...state, isActiveTimer: true});
@@ -31,6 +35,7 @@ const Simulator = ({text, getText}) => {
 
     }, [state.isActiveTimer, state.inputUser, state.totalSymbols, state.isActiveInput])
 
+    //Таймер
     React.useEffect(() => {
         let interval = null;
         if (state.isActiveTimer) {
@@ -43,8 +48,7 @@ const Simulator = ({text, getText}) => {
         return () => clearInterval(interval);
     }, [state.isActiveTimer, seconds])
 
-
-
+    //Проверяем вводимый пользователем текст
     const handleInput = (event) => {
         const value = event.target.value;
         let input;
@@ -56,12 +60,14 @@ const Simulator = ({text, getText}) => {
             input = value.length === 2 ? value.substring(1, 2) : value.substring(0, value.length - 2) + value.substring(value.length - 1);
         }
 
-
         const error = input !== text.substring(0, input.length);
 
-        setState({...state, inputUser: input,totalSymbols: state.totalSymbols + 1,
-            errors: error ? state.errors + 1 : state.errors,})
-
+        setState({
+            ...state,
+            inputUser: input,
+            totalSymbols: state.totalSymbols + 1,
+            errors: error ? state.errors + 1 : state.errors
+        })
     }
 
     return (

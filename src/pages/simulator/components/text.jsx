@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Компонент для вывода текста и отображение корректности вводимого текста
 const Text = ({text, inputUser}) => {
     return (
         <div style={{margin: '15px'}}>

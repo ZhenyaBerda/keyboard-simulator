@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Jumbotron} from "react-bootstrap";
 
-
+//Компонента информацией о скорости и точности печати
 const SimulatorInfo = ({seconds, totalSymbols, errors}) => {
     return (
         <div style={{ margin: '15px', textAlign: 'center' }}>
