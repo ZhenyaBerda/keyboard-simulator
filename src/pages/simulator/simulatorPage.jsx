@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Button} from "react-bootstrap";
-import Simulator from "./simulator";
+import Simulator from "./components/simulator";
 
 const SimulatorPage = () => {
     const [text, setText] = React.useState('');

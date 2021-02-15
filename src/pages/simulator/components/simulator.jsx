@@ -1,7 +1,7 @@
 import React from 'react';
 import Text from "./text";
-import {InputGroup, FormControl, Card, Button, Row} from "react-bootstrap";
 import SimulatorInfo from "./simulatorInfo";
+import {InputGroup, FormControl, Card, Button, Row} from "react-bootstrap";
 
 const Simulator = ({text, getText}) => {
 
@@ -69,6 +69,7 @@ const Simulator = ({text, getText}) => {
             <Card.Body>
                 <Card.Text>Введите текст в область ввода. Время начнется тогда, когда будет введен первый символ, и
                     закончится, когда будет введен последний правильный символ. Удачи!</Card.Text>
+                <Card.Text>P.S. После предложений по два пробела, будьте внимателнее.</Card.Text>
                 <InputGroup className="mb-3">
                     <FormControl
                         as={'textarea'}

@@ -1,8 +1,8 @@
 import React from "react";
 import {Route, Redirect, Switch} from 'react-router-dom';
-import {LinkContainer} from 'react-router-bootstrap'
-import {InfoPage, SimulatorPage} from "./components";
+import {InfoPage, SimulatorPage} from "./pages";
 import {Navbar, Nav} from "react-bootstrap";
+import {LinkContainer} from 'react-router-bootstrap'
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
