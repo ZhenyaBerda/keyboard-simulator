@@ -1,59 +1,67 @@
 import React from 'react';
 import Text from "./text";
-import { InputGroup, FormControl, Card } from "react-bootstrap";
+import {InputGroup, FormControl, Card, Button, Row} from "react-bootstrap";
 import SimulatorInfo from "./simulatorInfo";
 
-const Simulator = ({text}) => {
-    const [inputUser, setInputUser] = React.useState('');
-    const [totalSymbols, setTotalSymbols] = React.useState(0);
-    const [errors, setErrors] = React. useState(0);
+const Simulator = ({text, getText}) => {
+
+    const initialState = {
+        isActiveTimer: false,
+        inputUser: '',
+        isActiveInput: false,
+        errors: 0,
+        totalSymbols: 0,
+    }
+
+    const [state, setState] = React.useState({...initialState})
     const [seconds, setSeconds] = React.useState(0);
-    const [isActiveTimer, setIsActiveTimer] = React.useState(false);
-    const [isActiveInput, setIsActiveInput] = React.useState(false)
+
+    const onReload = () => {
+        getText();
+        setState({...initialState});
+        setSeconds(0);
+    }
 
     React.useEffect(() => {
-        if (totalSymbols === 1)
-            setIsActiveTimer(true);
+        if (state.totalSymbols === 1)
+            setState({...state, isActiveTimer: true});
 
-        if (inputUser === text) {
-            setIsActiveTimer(false);
-            setIsActiveInput(true)
-        }
-    }, [isActiveTimer, inputUser, totalSymbols, isActiveInput])
+        if (state.inputUser === text)
+            setState({...state, isActiveTimer: false, isActiveInput: true});
+
+    }, [state.isActiveTimer, state.inputUser, state.totalSymbols, state.isActiveInput])
 
     React.useEffect(() => {
         let interval = null;
-        if (isActiveTimer) {
+        if (state.isActiveTimer) {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
             }, 1000);
-        } else if (!isActiveTimer && seconds !== 0) {
+        } else if (!state.isActiveTimer && seconds !== 0) {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [isActiveTimer, seconds])
+    }, [state.isActiveTimer, seconds])
+
 
 
     const handleInput = (event) => {
         const value = event.target.value;
         let input;
 
-        setTotalSymbols(totalSymbols + 1);
-
-        if (inputUser.length === 0 ||
-            inputUser[inputUser.length - 1] === text[inputUser.length - 1]) {
+        if (state.inputUser.length === 0 ||
+            state.inputUser[state.inputUser.length - 1] === text[state.inputUser.length - 1]) {
             input = value;
-            setInputUser(input);
         } else {
             input = value.length === 2 ? value.substring(1, 2) : value.substring(0, value.length - 2) + value.substring(value.length - 1);
-            setInputUser(input);
         }
-        checkErrors(input, text.substring(0, input.length))
-    }
 
-    const checkErrors = (input, subText) => {
-        if (input !== subText)
-            setErrors(errors + 1);
+
+        const error = input !== text.substring(0, input.length);
+
+        setState({...state, inputUser: input,totalSymbols: state.totalSymbols + 1,
+            errors: error ? state.errors + 1 : state.errors,})
+
     }
 
     return (
@@ -65,20 +73,32 @@ const Simulator = ({text}) => {
                     <FormControl
                         as={'textarea'}
                         rows={4}
-                        value={inputUser}
+                        value={state.inputUser}
                         onChange={handleInput}
                         placeholder={'Начните вводить текст здесь'}
-                        readOnly={isActiveInput}
+                        readOnly={state.isActiveInput}
                     />
                 </InputGroup>
                 <Card style={{marginBottom: '15px'}}>
-                    <Text text={text} inputUser={inputUser}/>
+                    <Text text={text} inputUser={state.inputUser}/>
                 </Card>
                 <Card>
                     <SimulatorInfo
-                        spm={seconds ? totalSymbols / (seconds * 0.0166) : 0}
-                        accuracy={totalSymbols ? (totalSymbols - errors) * 100 / totalSymbols : 0}
+                        seconds={seconds}
+                        totalSymbols={state.totalSymbols}
+                        errors={state.errors}
                        />
+                </Card>
+                <Card>
+                    <Row className="justify-content-md-center align-items-center">
+                        Хотите попробовать еще?
+                        <Button
+                            variant="link"
+                            onClick={onReload}
+                        >
+                            Новый текст
+                        </Button>
+                    </Row>
                 </Card>
             </Card.Body>
         </div>
