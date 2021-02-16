@@ -16,7 +16,8 @@
     "react-router-dom": "^5.2.0"
   },
   "scripts": {
-    "start": "react-scripts start --watch"
+    "start": "react-scripts start --watch",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
